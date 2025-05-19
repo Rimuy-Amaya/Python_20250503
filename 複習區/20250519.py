@@ -68,3 +68,18 @@ elif price >= 10000:
     price = price * 0.95
 
 print("實付金額是:", price)
+
+#%%
+
+height = float ( input("請輸入身高，單位為公分:"))
+weight = float ( input("請輸入體重，單位為公斤:"))
+BMI = weight / ( (height/100)**2 )
+
+if BMI < 18.5:
+    print(f"您的BMI是{BMI}\n「您的體重太輕」")
+elif BMI < 25:
+    print(f"您的BMI是{BMI}\n「您的體重正常」")
+elif BMI < 30:
+    print(f"您的BMI是{BMI}\n「您的體重過重」")
+else:
+    print(f"您的BMI是{BMI}\n「您的體重肥胖」")
