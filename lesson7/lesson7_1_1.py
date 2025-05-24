@@ -1,4 +1,4 @@
-import tools
+import window0524.tools as tools
 
 def main():
     height:int = int(input("請輸入身高(cm):"))
