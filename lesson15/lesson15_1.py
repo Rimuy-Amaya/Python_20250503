@@ -6,6 +6,7 @@ from datetime import date
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib
+import altair as alt
 
 # --- 核心資料處理邏輯 (從原腳本繼承並優化) ---
 
@@ -155,9 +156,26 @@ def run_app():
     filtered_data = all_data.loc[mask, selected_stocks]
 
 
-    # 1. 股價走勢圖
+    # 1. 股價走勢圖 (使用 Altair 以獲得更好的互動性與控制)
     st.subheader("收盤價走勢圖")
-    st.line_chart(filtered_data)
+    if not filtered_data.empty:
+        # 為了使用更強大的 Altair 圖表，我們需要將資料從「寬」格式轉換為「長」格式
+        # reset_index() 將 'Date' 索引變為普通欄位
+        # melt() 將股票名稱欄位（台積電、聯電等）收攏到一個 '股票名稱' 欄位中
+        data_long = filtered_data.reset_index().melt('Date', var_name='股票名稱', value_name='收盤價')
+
+        # 建立 Altair 圖表
+        # scale=alt.Scale(zero=False) 是關鍵，它會讓Y軸根據數據範圍自動調整，而不是從0開始
+        chart = alt.Chart(data_long).mark_line().encode(
+            x=alt.X('Date:T', title='日期'),
+            y=alt.Y('收盤價:Q', title='收盤價', scale=alt.Scale(zero=False)),
+            color=alt.Color('股票名稱:N', title='股票'),
+            tooltip=['Date', '股票名稱', '收盤價']
+        ).interactive()
+
+        st.altair_chart(chart, use_container_width=True)
+    else:
+        st.write("在選定的日期範圍內沒有資料可顯示。")
 
     # 2. 相關性熱圖 (當選擇多於一檔股票時顯示)
     if len(selected_stocks) > 1:
