@@ -148,8 +148,12 @@ def run_app():
         st.error("錯誤：開始日期不能晚於結束日期。")
         return
 
-    # 根據使用者選擇過濾資料
-    filtered_data = all_data.loc[start_date:end_date, selected_stocks]
+    # 根據使用者選擇過濾資料。
+    # 使用布林遮罩 (boolean masking) 而不是 .loc[start:end] 切片。
+    # 這種方法更具彈性，即使用戶選擇的日期範圍超出實際資料的起訖點，也不會引發 KeyError。
+    mask = (all_data.index >= pd.to_datetime(start_date)) & (all_data.index <= pd.to_datetime(end_date))
+    filtered_data = all_data.loc[mask, selected_stocks]
+
 
     # 1. 股價走勢圖
     st.subheader("收盤價走勢圖")
