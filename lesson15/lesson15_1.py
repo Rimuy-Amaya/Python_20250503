@@ -106,7 +106,9 @@ def process_and_combine_data():
     # 使用 pd.concat 依據索引 (Date) 合併所有 DataFrame
     combined_df = pd.concat(all_close_prices, axis=1)
     
-    # 填補因假日等因素造成的缺失值 (用前一天的值來填補)
+    # 處理缺失值：
+    # 使用 'ffill' (forward-fill) 策略，將前一個交易日的收盤價填充到因假日或停牌造成的 NaN 空格中。
+    # 這是處理金融時間序列數據的標準做法，可以確保數據的連續性，且避免使用未來數據。
     combined_df.fillna(method='ffill', inplace=True)
 
     print("\n合併後的收盤價資料預覽 (最後5筆):")
