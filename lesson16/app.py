@@ -2,6 +2,7 @@ import streamlit as st
 import yfinance as yf
 import os
 import pandas as pd
+import seaborn as sns
 
 def download_tw_stocks():
     stock_list = ['2330.TW', '2303.TW', '2454.TW', '2317.TW']
