@@ -49,7 +49,7 @@ def main():
 
     # 這裡不再使用 mutually_exclusive_group，因為 process_data 可以處理兩種輸入
     parser.add_argument('--input', type=str, required=True, help='輸入的檔案路徑 (副檔名需為 .csv 或 .xlsx)')
-    parser.add_argument('--out', type=str, required=True, help='輸出的檔案路徑 (副檔名需為 .csv 或 .xlsx)')
+    parser.add_argument('--output', type=str, required=True, help='輸出的檔案路徑 (副檔名需為 .csv 或 .xlsx)')
 
     args = parser.parse_args()
 
