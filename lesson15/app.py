@@ -21,7 +21,7 @@ def load_data():
     # --- Part 1: 智慧下載 (原 download_data) ---
     data_dir = 'data'
     os.makedirs(data_dir, exist_ok=True)
-    tickers = ['2330.TW', '2303.TW', '2454.TW', '2317.TW']
+    tickers = ['2330.TW', '2303.TW', '2454.TW', '2317.TW','006208.TW']
 
     for ticker in tickers:
         stock_code = ticker.split('.')[0]
@@ -53,7 +53,8 @@ def load_data():
         '2330': '台積電',
         '2303': '聯電',
         '2317': '鴻海',
-        '2454': '聯發科'
+        '2454': '聯發科',
+        '006208':'富邦台灣采吉50基金'
     }
     
     all_close_prices = []
